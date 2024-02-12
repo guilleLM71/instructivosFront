@@ -1,0 +1,23 @@
+<app-header title="Login"> </app-header>
+<ion-content>
+    <div class="d-flex-center ">
+        <form [formGroup]="form" class="auth-form">
+            <app-custom-input 
+            icon="person-outline"
+            autocomplete="usuario"
+            [control]="form.controls.usuario"
+            type="text"
+            label="Usuario : "
+    
+            ></app-custom-input>
+            <app-custom-input 
+            icon="lock-closed-outline"
+            [control]="form.controls.password"
+            type="password"
+            label="Password :"
+            ></app-custom-input>
+            <ion-button (click) ="loginAdmin()" expand="block" color="primary">Login</ion-button>
+
+        </form>
+    </div>
+</ion-content>

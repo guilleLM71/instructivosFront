@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Instructivo {{instructivoSeleccionado.nombre}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row class="ion-justify-content-between">
+        <ion-col size="3">
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="90%">
+              <ion-title size="small">
+                Instructivo Firmado (Escaneado)
+              </ion-title>
+            </ion-col>
+            <ion-col size="10%">
+              <ion-title size="small">
+                <ion-badge
+                  color="{{instructivoSeleccionado.vigencia? 'success' : 'danger' }}"
+                  >{{ instructivoSeleccionado.vigencia ? "Vigente" : "No
+                  vigente" }}</ion-badge
+                ></ion-title
+              >
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="3">
+          <ion-row class="ion-justify-content-end">
+            <ion-col size="50%">
+              <ion-button [href]="urlEscaneado"  shape="round">
+                Descargar
+              </ion-button>
+            </ion-col>
+            <ion-col size="50%">
+              <ion-button href="urlOriginal" shape="round">
+                Original (sin firmas)
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  <iframe
+    width="100%"
+    height="90%"
+    [src]="'http://127.0.0.1:5000/instructivos_escaneados/'+instructivoSeleccionado.id_instructivo+'.pdf' | safe"
+  ></iframe>
+</ion-content>

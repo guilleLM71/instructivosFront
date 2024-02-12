@@ -1,0 +1,49 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-item>
+      <ion-title>Instructivos</ion-title>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+<div class="ion-padding">
+  <table datatable [dtOptions]="dtOptions" *ngIf="instructivos.length>0">
+    <thead>
+      <tr>
+        <td>Nombre</td>
+        <td>Tipo</td>
+        <td>Versión</td>
+        <td>Vigencia</td>
+        <td>Fecha Inicio</td>
+        <td>Fecha Fin</td>
+        <td>PDF Original</td>
+        <td>PDF Escaneado</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let inst of instructivos">
+        <td>{{ inst.nombre }}</td>
+        <td>{{ inst.tipoInstructivo }}</td>
+        <td>{{ inst.version }}</td>
+        <td>{{inst.responsable}}</td>
+        <td>
+          <ion-badge color="{{ inst.vigencia ? 'success' : 'danger' }}">{{
+            inst.vigencia ? "Vigente" : "No vigente"
+          }}</ion-badge>
+        <td>{{ inst.fecha_inicio }}</td>
+        <td>{{ inst.vigencia !== true ? inst.fecha_fin : "-" }}</td>
+        <td>
+          <ion-button (click)="open(inst, 'http://127.0.0.1:5050/instructivos/instructivos_originales/'+inst.id_instructivo+'.pdf')"><ion-icon name="eye-outline" size="small"></ion-icon></ion-button>
+        </td>
+        <td>
+          <ion-button (click)="open(inst, 'http://127.0.0.1:5050/instructivos/instructivos_escaneados/'+inst.id_instructivo+'.pdf')"><ion-icon name="eye-outline" size="small"></ion-icon></ion-button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="instructivos.length===0" class="ion-padding">
+  <ion-text color="danger">
+    <h2>No hay instructivos cargados</h2>
+  </ion-text>
+</div> 

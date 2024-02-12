@@ -1,0 +1,14 @@
+
+  <h2>{{ instructivoSeleccionado.nombre | uppercase }} Details</h2>
+  <div><span>id: </span>{{ instructivoSeleccionado.id_instructivo }}</div>
+  <div>
+    <label
+      >Nombre:
+      <input [(ngModel)]="instructivoSeleccionado.nombre" placeholder="name" />
+    </label>
+    <label
+      >Nombre:
+      <input [(ngModel)]="instructivoSeleccionado.version" placeholder="name" />
+    </label>
+  </div>
+

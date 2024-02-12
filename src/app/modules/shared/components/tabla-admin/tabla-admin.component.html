@@ -1,0 +1,175 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-item>
+      <ion-title>Instructivos</ion-title>
+      <ion-button size="default" color="tertiary" (click)="openFormulario()">
+        <ion-icon slot="start" name="document"></ion-icon>
+        Agregar
+      </ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+<div class="ion-padding">
+  <table datatable [dtOptions]="dtOptions" *ngIf="instructivos.length > 0">
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>Codigo</td>
+        <td>Nombre</td>
+        <td>Versión</td>
+        <td>Vigencia</td>
+        <td>Estado</td>
+        <td>Clasificación</td>
+        <td>Responsable</td>
+        <td>Fecha Inicio</td>
+        <td>Fecha Fin</td>
+        <td>Tipo</td>
+        <td>PDF Original</td>
+        <td>PDF Escaneado</td>
+        <td>Tiempo</td>
+        <td>Acciones</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let inst of instructivos">
+        <td>{{ inst.id_instructivo }}</td>
+        <td>{{ inst.codigo }}</td>
+        <td>{{ inst.nombre }}</td>
+        <td>{{ inst.version }}</td>
+        <td>
+          <ion-badge color="{{ inst.vigencia ? 'success' : 'danger' }}">{{
+            inst.vigencia ? "Vigente" : "No vigente"
+          }}</ion-badge>
+        </td>
+        <td>
+          <ion-badge color="{{ inst.estado ? 'success' : 'warning' }}">{{
+            inst.estado ? "Aprobado" : "Elaborado"
+          }}</ion-badge>
+
+          
+        </td>
+        <td>
+          <ion-badge color="{{ inst.clasificacion=='Alta'? 'danger' : inst.clasificacion=='Media'? 'warning':'success' }}">{{
+            inst.clasificacion
+          }}</ion-badge>
+
+        </td>
+        <td>{{ inst.responsable }}</td>
+        <td>{{ inst.fecha_inicio }}</td>
+        <td>{{ inst.vigencia !== true ? inst.fecha_fin : "-" }}</td>
+        <td>{{ inst.tipoInstructivo.nombre }}</td>
+        <td>
+          <ion-button
+            size="small"
+            (click)="
+              open(
+                inst,
+                'http://127.0.0.1:5050/instructivos/instructivos_originales/' +
+                  inst.id_instructivo +
+                  '.pdf'
+              )
+            "
+          >
+            <ion-icon name="eye-outline" size="small"></ion-icon>
+          </ion-button>
+        </td>
+        <td>
+          <ion-button
+            size="small"
+            (click)="
+              open(
+                inst,
+                'http://127.0.0.1:5050/instructivos/instructivos_escaneados/' +
+                  inst.id_instructivo +
+                  '.pdf'
+              )
+            "
+          >
+            <ion-icon name="eye-outline" size="small"></ion-icon>
+          </ion-button>
+        </td>
+        <td>
+          <ion-icon name="timer-outline"></ion-icon>
+          {{ restarFechas(inst.fecha_inicio) }}
+        </td>
+        <td>
+          <ion-button
+            fill="clear"
+            color="dark"
+            id="{{ inst.id_instructivo }}"
+            size="small"
+          >
+            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
+          <ion-popover
+            trigger="{{ inst.id_instructivo }}"
+            [showBackdrop]="false"
+          >
+            <ng-template>
+              <ion-content>
+                <ion-list>
+                  <ion-item
+                    [button]="true"
+                    [detail]="false"
+                    (click)="openInstructivo(inst, 'Editar')"
+                  >
+                    Editar instructivo
+                  </ion-item>
+                  <ion-item
+                    id="{{ inst.id_instructivo + '_aprobar' }}"
+                    [button]="true"
+                    [detail]="false"
+                  >
+                    Aprobar instructivo
+                  </ion-item>
+                  <ion-popover
+                    trigger="{{ inst.id_instructivo + '_aprobar' }}"
+                    [showBackdrop]="false"
+                  >
+                    <ng-template>
+                      <ion-content class="ion-padding">
+                        <ion-card>
+                          <ion-card-header>
+                            <ion-card-title
+                              >Sube tu doc. escaneado para
+                              aprobar</ion-card-title
+                            >
+                          </ion-card-header>
+
+                          <ion-card-content>
+                            <ion-input
+                              (change)="onFileUpload($event)"
+                              class="content-input"
+                              type="file"
+                              placeholder="Sube tu instructivo"
+                            >
+                            </ion-input>
+                            <ion-button
+                              size="default"
+                              color="tertiary"
+                              (click)="aprobarInstructivo(inst)"
+                            >
+                              <ion-icon name="checkmark-outline"></ion-icon>
+                            </ion-button>
+                          </ion-card-content>
+                        </ion-card>
+                      </ion-content>
+                    </ng-template>
+                  </ion-popover>
+                  <ion-item [button]="true" [detail]="false" (click)="anularInstructivo(inst)">
+                    Anular instructivo
+                  </ion-item>
+                </ion-list>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="instructivos.length === 0" class="ion-padding">
+  <ion-text color="danger">
+    <h2>No existen instructivos cargados</h2>
+  </ion-text>
+</div>
