@@ -12,6 +12,7 @@
         <td>Nombre</td>
         <td>Tipo</td>
         <td>Versión</td>
+        <td>Responsable</td>
         <td>Vigencia</td>
         <td>Fecha Inicio</td>
         <td>Fecha Fin</td>
@@ -22,7 +23,7 @@
     <tbody>
       <tr *ngFor="let inst of instructivos">
         <td>{{ inst.nombre }}</td>
-        <td>{{ inst.tipoInstructivo }}</td>
+        <td>{{ inst.tipoInstructivo.nombre }}</td>
         <td>{{ inst.version }}</td>
         <td>{{inst.responsable}}</td>
         <td>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { InstructivoDetalleComponent } from './modules/shared/components/instructivo-detalle/instructivo-detalle.component';
+import { AuthGuard } from './config/AuthGuard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,9 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule)
+    loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule),
+    canActivate: [AuthGuard]
+    
   }
   ,
   {

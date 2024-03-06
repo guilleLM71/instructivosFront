@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { SafeHtmlPipe } from './utils/safe-html.pipe';
 import { SharedModule } from './modules/shared/shared.module';
-
+import { OAuthModule } from 'angular-oauth2-oidc';
 import {DataTablesModule} from 'angular-datatables'
 
 
@@ -21,11 +21,15 @@ import {DataTablesModule} from 'angular-datatables'
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
-
-    
+    HttpClientModule,
+    OAuthModule.forRoot({
+      resourceServer: {
+          allowedUrls: ['http://localhost:9090/api'],
+          sendAccessToken: true
+      }}),
     
   ],
+
   providers: [
     { 
 

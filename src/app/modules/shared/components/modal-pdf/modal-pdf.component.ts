@@ -16,12 +16,14 @@ export class ModalPDFComponent implements OnInit {
   //@Input() instructivo!: Instructivo;
   public instructivo!: Instructivo;
   url!:string ;
+  folder!:string;
   fileURL!:string; 
  
 
   constructor(private modalController: ModalController, private navParams: NavParams, private dataService: DataServiceService ) {
     this.instructivo = this.navParams.get('instructivo');
     this.url = this.navParams.get('url');
+    this.folder = this.navParams.get('folder');
     console.log(this.url);
   }
   
@@ -31,7 +33,7 @@ export class ModalPDFComponent implements OnInit {
 
 
   viewPdf(pdfName: number) {
-    this.dataService.getPdf(pdfName).subscribe(
+    this.dataService.getPdf(pdfName, this.folder).subscribe(
       (response: any) => {
         const file = new Blob([response], { type: 'application/pdf' });
         this.fileURL = URL.createObjectURL(file);

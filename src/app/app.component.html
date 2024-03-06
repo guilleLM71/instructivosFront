@@ -1,3 +1,21 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-header *ngIf="token!=null" [translucent]="true">
+    <ion-toolbar>
+      <ion-title>Admin</ion-title>      
+      <ion-title slot="end" name="person-outline" size="large">Usuario: {{decoded.preferred_username}}</ion-title>
+      <ion-button (click)="logoff()" slot="end">Cerrar sesión</ion-button>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-header *ngIf="token==null" [translucent]="true">
+    <ion-toolbar>
+      <ion-title>Inicio</ion-title>
+      <ion-icon slot="end" name="person-outline" size="large"></ion-icon>
+      <ion-button (click)="login()" slot="end">Iniciar Sesión</ion-button>
+    </ion-toolbar>
+  </ion-header>
+
+    <ion-router-outlet></ion-router-outlet>
+
+ 
 </ion-app>

@@ -12,15 +12,18 @@ export class InstructivoPage implements OnInit {
   instructivoSeleccionado: Instructivo = {} as Instructivo;
   urlOriginal: any = '';
   urlEscaneado: any = '';
+  fileURL: any;
+
   constructor(
     private route: ActivatedRoute,
     private dataService: DataServiceService
-  ) //private location: Location
+  ) 
   {}
 
   ngOnInit() {
-    this.getID();
+    this.getID();    
     const id: number = Number(this.route.snapshot.paramMap.get('id'));
+    this.viewPdf(id, "instructivos_escaneados");
     this.downloadOriginal(id);
     this.downloadEscaneado(id);
   }
@@ -51,5 +54,19 @@ export class InstructivoPage implements OnInit {
         console.log(this.urlEscaneado);     
       });
 
+  }
+
+  viewPdf(pdfName: number, folder: string) {
+    this.dataService.getPdf(pdfName, folder).subscribe(
+      (response: any) => {
+        const file = new Blob([response], { type: 'application/pdf' });
+        this.fileURL = URL.createObjectURL(file);
+        console.log("file URL " + this.fileURL);
+        //window.open(this.fileURL);
+      },
+      error => {
+        console.error('Error al obtener el PDF:', error);
+      }
+    );
   }
 }

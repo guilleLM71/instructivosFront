@@ -21,9 +21,6 @@ export class InicioPage implements OnInit {
    
   }
 
-  irLogin(){
-    console.log("irLogin");
-    this.router.navigate(['/auth']);
-  }
+
 
 }

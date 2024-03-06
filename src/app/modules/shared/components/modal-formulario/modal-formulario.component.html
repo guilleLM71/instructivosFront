@@ -9,9 +9,29 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <form >
+  <form  >
     <ion-toolbar><h2> {{ accion }} Instructivo</h2></ion-toolbar>
     <ion-grid>
+      <ion-row size="auto">
+        <ion-col size="8">
+          <ion-label>Codigo </ion-label>
+          <ion-item>
+            <ion-input
+              type="text" name="codigo" [(ngModel)]="codigo"
+              placeholder="Ingrese el codigo"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-label>Responsable </ion-label>
+          <ion-item>
+            <ion-input
+              type="text" name="responsable" [(ngModel)]="responsable"
+              placeholder="Ingrese el responsable"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
       <ion-row size="auto">
         <ion-col size="8">
           <ion-label>Nombre del instructivo</ion-label>
@@ -76,10 +96,15 @@
           </ion-item>
         </ion-col>
         <ion-col size="auto">
-          <ion-label>Confidencialidad</ion-label>
+          <ion-label>Clasificacion</ion-label>
           <ion-item>
-            <ion-select class="always-flip" toggleIcon="caret-down-sharp" interface="popover" placeholder="Elija opción"
-            (ionChange)="obtenerConfidencia($event)" [(ngModel)]="confidencia">
+            <ion-select class="always-flip" 
+            toggleIcon="caret-down-sharp" 
+            interface="popover" 
+            placeholder="Elija opción"          
+            (ionChange)="obtenerConfidencia($event)"
+            value="{{instructivo.clasificacion}}"
+            >
               <ion-select-option value="Alta">Alta</ion-select-option>
               <ion-select-option value="Media">Media</ion-select-option>
               <ion-select-option value="Baja">Baja</ion-select-option>
@@ -95,6 +120,8 @@
           <ion-input
             (change)="onFileUpload($event)"
             type="file"
+            name="pdf"
+            formControlName="defaultPdf"
             placeholder="Sube tu instructivo"
           ></ion-input>
         </ion-col>
@@ -115,7 +142,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar style="text-align: center">
-    <ion-button color="tertiary" shape="round" fill="outline" >Cancelar</ion-button >
+    <ion-button color="tertiary" shape="round" fill="outline" (click)="close()" >Cancelar</ion-button >
     <ion-button *ngIf="accion=='Agregar'" (click)="enviarDatos()"  color="tertiary" shape="round" fill="solid">Crear</ion-button>
     <ion-button *ngIf="accion=='Editar'" (click)="editarDatos()"  color="tertiary" shape="round" fill="solid">Editar</ion-button>
 
